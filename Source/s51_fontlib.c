@@ -1,41 +1,30 @@
 /**
  * @file s51_fontlib.c
- * @author your name (you@domain.com)
+ * @author yinxiang2207(yinxiang2207@gmail.com)
  * @brief 
  * @version 1.0
  * @date 2020-03-13
  * 
- * @copyright Copyright (c) 2020
+ * @copyright Copyright (c) 2020 
  * 
  */
 
 #include "s51_fontlib.h"
 
 /**
- * @brief 
+ * @brief Interface function
  * 
- * @param _data 
- * @return uint8_t 
+ * @param _data data
+ * @return uint8_t Read the returned value
  */
 uint8_t Simple51_FontLib_Interface(uint8_t _data, uint8_t _ss)
 {
     uint8_t _getdata = 0x00;
     extern SPI_HandleTypeDef hspi1;
-    if (_ss == 0)
-    {
-        pin_fontss = RESET;
-    }
-    if (_ss == 1)
-    {
-        pin_fontss = SET;
-    }
 
-    if (_ss == 2)
-    {
-        Simple51_SPI_TransmitReceive(&hspi1, &_data, &_getdata, _ss);
-        return _getdata;
-    }
-    return 0;
+    pin_fontss = _ss;
+    Simple51_SPI_TransmitReceive(&hspi1, &_data, &_getdata, 1);
+    return _getdata;
 }
 
 /**
@@ -91,23 +80,22 @@ uint32_t Simple51_FontLib_FindFirstAddress(uint8_t *_str, Font_type _fonttype)
 }
 
 /**
- * @brief 
+ * @brief Send address to library and return data
  * 
- * @param _fontaddress 
- * @param _pdata 
- * @param _len 
+ * @param _fontaddress Font encoding first address
+ * @param _pdata Data pointer returned
+ * @param _len Data pointer length returned
  */
 void Simple51_FontLib_ReadAddress(uint32_t _fontaddress, uint8_t *_pdata, uint8_t _len)
 {
-    Simple51_FontLib_Interface(0x00, 0);
-    Simple51_FontLib_Interface(0x03, 2);
-    Simple51_FontLib_Interface((uint8_t)(_fontaddress >> 16), 2);
-    Simple51_FontLib_Interface((uint8_t)(_fontaddress >> 8), 2);
-    Simple51_FontLib_Interface((uint8_t)(_fontaddress), 2);
+    Simple51_FontLib_Interface(0x03, RESET);
+    Simple51_FontLib_Interface((uint8_t)(_fontaddress >> 16), RESET);
+    Simple51_FontLib_Interface((uint8_t)(_fontaddress >> 8), RESET);
+    Simple51_FontLib_Interface((uint8_t)(_fontaddress), RESET);
     for (; _len > 0; _len--)
     {
-        *_pdata = Simple51_FontLib_Interface(0x00, 2);
+        *_pdata = Simple51_FontLib_Interface(0x00, RESET);
         _pdata++;
     }
-    Simple51_FontLib_Interface(0x00, 1);
+    Simple51_FontLib_Interface(0x00, SET);
 }
