@@ -41,7 +41,7 @@ The Chinese Compatible GB2312 16x16
 
 5. Display effect
 
-    [display effect](Resources/Snipaste_1.png)
+    ![display effect](Resources/Snipaste_1.png)
 
 # License
 
