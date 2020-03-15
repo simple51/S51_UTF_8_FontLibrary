@@ -1,3 +1,4 @@
+[English](README.md)|[Chinese](README-zh.md)
 # S51_UTF_8_FontLibrary
 UTF-8 font dot matrix data is saved through external FLASH  
 s51 UTF-8 font is an open source font based on the simple51 framework.   This library is mainly used to display Chinese ASCII codes or other   Chinese characters on a monochrome dot matrix display module. Read through SPI FLASH.
@@ -47,3 +48,8 @@ The Chinese Compatible GB2312 16x16
 
 Apache License  
 Version 2.0, January 2004
+
+# Contact information  
+
+ yinxiang2207@gmail.com
+ 
